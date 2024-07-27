@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yogels - Fresh yogurt bagels in NYC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bagel: {
+                            dark: '#8B4513',   // Darker brown for the edges
+                            golden: '#D2691E', // Chocolate for the well-baked areas
+                            light: '#F4A460',  // Sandy brown for lighter areas
+                            cream: '#FFEFD5',  // Papaya whip for the inside
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .custom-green-underline {
+            text-decoration: underline;
+            text-decoration-color: green;
+        }
+
+        .highlight {
+            background-color: yellow;
+            padding: 2px 4px;
+        }
+
+        .ticker-wrap {
+            overflow: hidden;
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker 60s linear infinite;
+        }
+
+        .ticker.slow {
+            animation-duration: 120s;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
+        }
+
+        .ticker__item {
+            display: inline-block;
+            font-size: 5.5rem;
+            line-height: 1.2;
+            padding: 0.25rem 0;
+        }
+
+        @media (max-width: 767px) {
+            .mobile-container {
+                height: 110vh;
+            }
+
+            .mobile-yogels {
+                height: 65vh;
+            }
+
+            .mobile-text {
+                font-size: 4.5rem;
+            }
+        }
+
+        .rotate-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            letter-spacing: 0.05em;
+        }
+        .waitlist-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-width: 90%;
+            width: 400px;
+        }
+        .waitlist-form.active { display: block; }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .overlay.active { display: block; }
+    </style>
+</head>
+
+<body>
+    <div class="grid grid-cols-4 md:grid-cols-8 md:grid-rows-6 mobile-container md:h-screen">
+        <div class="col-span-4 md:col-span-4 md:row-span-3 mobile-yogels md:h-full flex flex-col items-center justify-center space-y-6 bg-gradient-to-br from-bagel-dark via-bagel-golden to-bagel-light p-10 text-black border-b md:border-r border-black overflow-hidden relative">
+            <div class="absolute inset-0 bg-opacity-20 bg-bagel-cream backdrop-filter backdrop-blur-sm"></div>
+            
+            <div class="relative z-10 flex flex-col items-center space-y-4">
+                <div class="h-24 w-24 md:h-32 md:w-32 rounded-full bg-white shadow-lg overflow-hidden">
+                    <img src="bagel.svg" alt="Yogels bagel" class="w-full h-full object-cover" />
+                </div>
+                
+                <h1 id="botanical" class="text-6xl md:text-7xl font-bold text-center text-black drop-shadow-lg">Yogels</h1>
+                
+                <p class="text-lg md:text-xl font-light text-center max-w-md text-black">
+                    Where <span class="font-semibold">Yogurt</span> Meets <span class="font-semibold">Bagel</span> in Perfect Harmony
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-2 mt-2">
+                    <span class="px-2 py-1 bg-white bg-opacity-50 rounded-full text-xs md:text-sm font-medium text-black">Probiotic-Rich</span>
+                    <span class="px-2 py-1 bg-white bg-opacity-50 rounded-full text-xs md:text-sm font-medium text-black">Locally Sourced</span>
+                    <span class="px-2 py-1 bg-white bg-opacity-50 rounded-full text-xs md:text-sm font-medium text-black">Artisanal</span>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-bagel-light to-transparent"></div>
+            
+            <div class="absolute top-4 left-4 animate-bounce">
+                <img src="yogurt.svg" alt="Yogurt icon" class="w-8 h-8 text-black" />
+            </div>
+            
+            <div class="absolute top-4 right-4 animate-bounce" style="animation-delay: 0.5s;">
+                <img src="yogurt.svg" alt="Yogurt icon" class="w-8 h-8 text-black" />
+            </div>
+        </div>
+
+    <div class="col-span-4 md:col-span-4 md:row-span-3 h-[50vh] md:h-full grid grid-cols-4 border-b border-black">
+        <div class="col-span-2 border-r border-black p-4 flex items-start justify-start">
+            <div class="max-w-full md:max-w-3/4 text-center text-right">
+                <h2 id="handcrafted-yogurt-bagels-made-with-simple-real-ingredients"
+                    class="text-3xl lg:leading-relaxed md:text-4xl  lg:text:4xl font-semibold mb-2">
+                    Handcrafted yogurt bagels made with </br><span class="highlight">Simple, real ingredients.</span>
+                </h2>
+                <p class="text-lg md:text-md">Experience the perfect bagel in every bite.</p>
+            </div>
+        </div>
+
+        <div class="col-span-1 border-r border-black flex items-center justify-center">
+            <button id="waitlistButton" class="link-div block w-full h-full flex items-center justify-center bg-transparent hover:bg-black transition duration-300">
+                <span class="text-black hover:text-white mobile-text font-light lg:text-9xl rotate-text">Order</span>
+            </button>
+        </div>
+
+        <div class="col-span-1 flex items-center justify-center">
+            <a href="your-link-url"
+                class="link-div block w-full h-full flex items-center justify-center bg-transparent hover:bg-black transition duration-300">
+                <span class="text-black hover:text-white mobile-text font-light lg:text-9xl rotate-text">Team</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-span-4 md:col-span-8 md:row-span-1 h-[16.67vh] md:h-full border-b border-black">
+        <div class="ticker-wrap h-full flex items-center">
+            <div class="ticker slow">
+                <div class="ticker__item">
+                    Savor the <em>goodness</em> of Yogels - Where yogurt meets bagel in perfect harmony. Savor the
+                    <em>goodness</em> of Yogels - Where yogurt meets bagel in perfect harmony. Savor the
+                    <em>goodness</em> of Yogels - Where yogurt meets bagel in perfect harmony!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-4 md:col-span-8 md:row-span-1 h-[16.67vh] md:h-full border-b border-black">
+        <div class="ticker-wrap h-full flex items-center">
+            <div class="ticker slow">
+                <div class="ticker__item">
+                    Baked <strong>fresh daily</strong> in NYC using only the finest ingredients. Creamy, Flavorful,
+                    Wholesome, Nutritious, Fresh, Natural, Indulgent, Satisfying, Tangy, Aromatic, Delightful,
+                    Gut-friendly, Probiotic-rich, High-quality, Artisanal, Homemade, Tempting, Savory, Comforting,
+                    Appetizing.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-4 md:col-span-8 md:row-span-1 h-[16.67vh] md:h-full">
+        <div class="ticker-wrap h-full flex items-center">
+            <div class="ticker slow">
+                <div class="ticker__item tracking-wider">
+                    Created by <span class="custom-green-underline">Bagel Lovers.</span> A taste of New York in
+                    every Yogel. Created by <span class="custom-green-underline">Bagel Lovers.</span> A taste of New
+                    York in every Yogel. Created by <span class="custom-green-underline">Bagel Lovers.</span> A
+                    taste of New York in every Yogel.
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="waitlistForm" class="waitlist-form">
+        <h2 class="text-2xl font-bold mb-4">Join Our Waitlist</h2>
+        <form id="waitlistSignupForm">
+            <div class="mb-4">
+                <label for="name" class="block mb-2">Name:</label>
+                <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block mb-2">Email:</label>
+                <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded px-3 py-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="phone" class="block mb-2">Phone (Optional):</label>
+                <input type="tel" id="phone" name="phone" class="w-full border border-gray-300 rounded px-3 py-2">
+            </div>
+            <div class="flex justify-end">
+                <button type="submit" class="bg-bagel-golden text-white px-4 py-2 rounded hover:bg-bagel-dark transition duration-300">Join Waitlist</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="overlay" class="overlay"></div>
+
+    <script>
+        const waitlistButton = document.getElementById('waitlistButton');
+        const waitlistForm = document.getElementById('waitlistForm');
+        const overlay = document.getElementById('overlay');
+        const waitlistSignupForm = document.getElementById('waitlistSignupForm');
+
+        waitlistButton.addEventListener('click', () => {
+            waitlistForm.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            waitlistForm.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        waitlistSignupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(waitlistSignupForm);
+            const waitlist = 'clz4gygis0002ffjkdfqr1067';
+            const email = formData.get('email');
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+
+            try {
+                const response = await fetch('https://www.waitlist.email/api/subscribers/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        waitlist,
+                        email,
+                        name,
+                        phone,
+                    }),
+                });
+
+                const body = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(body.message);
+                }
+
+                window.alert('You have been added to the waitlist!');
+                waitlistForm.classList.remove('active');
+                overlay.classList.remove('active');
+            } catch (error) {
+                window.alert(error.message);
+            }
+        });
+    </script>
+</body>
+
+</html>
