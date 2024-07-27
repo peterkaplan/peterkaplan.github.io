@@ -111,6 +111,29 @@
             z-index: 999;
         }
         .overlay.active { display: block; }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            border-radius: 4px;
+            display: none;
+            z-index: 1001;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .toast.show {
+            display: block;
+            animation: fadeInOut 3s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+        }
     </style>
 </head>
 
@@ -235,11 +258,15 @@
 
     <div id="overlay" class="overlay"></div>
 
+    <div id="toast" class="toast">
+        You have been added to the waitlist!
+    </div>
     <script>
         const waitlistButton = document.getElementById('waitlistButton');
         const waitlistForm = document.getElementById('waitlistForm');
         const overlay = document.getElementById('overlay');
         const waitlistSignupForm = document.getElementById('waitlistSignupForm');
+        const toast = document.getElementById('toast');
 
         waitlistButton.addEventListener('click', () => {
             waitlistForm.classList.add('active');
@@ -250,6 +277,13 @@
             waitlistForm.classList.remove('active');
             overlay.classList.remove('active');
         });
+
+        function showToast() {
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
         waitlistSignupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -279,9 +313,15 @@
                     throw new Error(body.message);
                 }
 
-                window.alert('You have been added to the waitlist!');
+                // Close the form
                 waitlistForm.classList.remove('active');
                 overlay.classList.remove('active');
+
+                // Show success toast
+                showToast();
+
+                // Reset the form
+                waitlistSignupForm.reset();
             } catch (error) {
                 window.alert(error.message);
             }
